@@ -1,4 +1,4 @@
 DEBUG=True
-SECRET_KEY="jintianyanjingyoudianlei(@@)"
+SECRET_KEY="awefawfanyanjingyoudianlei(@@)"
 CSRF_ENABLED=True
 CSRF_SESSION_LKEY="youyaoshuyigemima?"
