@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>GreenCents</title>
+    <meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+        body {
+            padding-bottom: 40px;
+        }
+        .visible-desktop {
+            padding-top: 60px;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.js"></script>
+    {% block import %}
+    {% endblock %}
+
+  </head>
+
+  <body onload="initialize()">
+  <div class="visible-desktop"></div>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/"><img width="100" height="20" src="/static/img/logo.png"/></a>
+          <div class="nav-collapse">
+              <ul class="nav">
+                  <li {% if request.path == "/" %} class="active" {% endif %}><a href="/">Home</a></li>
+                  <li {% if request.path == "/bmap" %} class="active" {% endif %}><a href="/bmap">Route</a></li>
+                  <li {% if request.path == "/about" %} class="active" {% endif %}><a href="/about">About GC</a></li>
+                  <li {% if request.path == "/meet" %} class="active" {% endif %}><a href="/meet">Meet the Team</a></li>
+              </ul>
+              <ul class="nav pull-right"> 
+                  {% if username %}
+                  <li>
+                    <a href={{ url_for('user', username=username) }}>{{ username }}</a>
+                  </li>
+                  <li><a href="/logout">Logout</a></li>
+                  {% else %}
+                  <form method="post" action="/login" class="navbar-form pull-left">
+                      <input class="input-small" type="text" name="username" class="span2" placeholder="Username">
+                      <input class="input-small" type="password" name="passwd" class="span2" placeholder="Password">
+                      <button class="btn btn-small btn-warning" type="submit">Login</button>
+                  </form>
+                  <li><a href="/signup">Or sign up</a></li>
+                  {% endif %}
+              </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      {% block content %}
+      {% endblock %}
+
+
+      <div class="row-fluid span12">
+          <hr>
+          <footer> Copyright © 2012 IPRO-320. All Rights Reserved. </footer>
+      </div>
+    </div> <!-- /container -->
+
+  </body>
+</html>

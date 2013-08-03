@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row-fluid">
+
+    <h1>GreenCents:</h1>
+    <i>an IPRO320 project</i>
+    </br>
+    </br>
+    <div style="max-width:500px">
+        <p>
+        Sponsored by <a href="http://www.pbworld.com/">Parsons Brinkerhoff</a>, our team was tasked with creating an application to help promote multi-modal transportation.  GreenCents is a personal route planning application designed to help the user save money and reduce their carbon emissions.
+        </p>
+        <p>
+        Green Cents is about convenient savings.  The goal of the application is to take some headache out of planning a trip that involves both person modes of transport, such as walking, and mass transit systems, such as the bus system.  Since the goals of the application are simplicity and cost analysis, the user interface must be clear and concise and the route selection and cost calculations need to be well refined.  For the prototype, our group has decided to focus on making the app easy to use.  The applications usability is centered on three questions: is the purpose clear, is it easily navigable and does the starting page provide all of the expected frequently used functionality.
+        </p>
+        <p>The planning side of the application utilizes the popular map and direction services Google Maps and Bing Maps, developed by Google and Microsoft respectively. These widely used programs provide meta-data about each leg of the journey, such as distance and geographical location. Our application then builds on top of the routes returned by these programs by calculating cost and environmental impact of the route.  These calculations are shown to the user to guide his or her choices as he or she plans a route.
+        </p>
+    </div>
+    </br>
+    <div style="max-width:400px">
+        <h2>Tips</h2>
+        <ul>
+            <li>Add and use favorite locations by clicking the star button on the Route page.</li>
+            <li>You can also use recent locations by clicking the history button (the button with the clock on it).</li>
+            <li>Update your vehicle's mpg in your profile page, and you'll get accurate cost estimates when getting directions.</li>
+        </ul>
+    </div>
+    <!-- Commenting the old video for now     
+    <div class="span8">
+        <h1>heading</h1>
+        <video controls="controls" autoplay="autoplay">
+        <source src="/static/video/out.ogv" type="video/ogg">
+        </video>
+    </div>
+    -->
+</div>
+{% endblock %}
+
+

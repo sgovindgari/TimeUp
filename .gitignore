@@ -1,0 +1,7 @@
+## 
+*.swp
+*.py.swp
+*.index.py.swp
+*.pyc
+*.pyo
+.DS_Store
