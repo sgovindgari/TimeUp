@@ -1,3 +1,16 @@
+h1
+{
+    font-size:90px;
+}
+
+.centered{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-left:-250px;
+    margin-top:-100px;
+}
+
 .hero-unit {
 	max-width: none;
 }
