@@ -12,6 +12,10 @@ import time, random, urllib, hashlib, json
 def index():
     return render_template('index.html')
 
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
 @app.route('/signup', methods=["GET", "POST"])
 def signup():
     form = UserForm()  
@@ -39,32 +43,6 @@ def signup():
         flash('User created', 'success')
         return redirect(url_for('index'))
     return render_template('signup.html', form=form, username=check_user())
-
-@app.route('/login', methods=["GET", "POST"])
-def login():
-    if request.method == "POST":
-        username = request.form['username']
-        passwd = hashlib.sha224(request.form['passwd']).hexdigest()
-        user_temp = db.GqlQuery("SELECT * "
-                "FROM User "
-                "WHERE username = :1 ", username)
-
-        user = db.GqlQuery("SELECT * "
-                "FROM User "
-                "WHERE username = :1 AND passwd = :2", username, passwd)
-        if user.count() > 0:
-            session['username'] = username
-            flash('Login successful', 'success')
-       	elif user_temp.count() > 0 and user_temp[0].passwd != passwd:
-            flash('Password incorrect', 'warning')
-        else:
-            flash('User does not exist', 'warning')
-        return redirect(url_for('index'))
-
-@app.route('/logout')
-def logout():
-    session.pop('username', None)
-    return redirect(url_for('index'))
 
 @app.route('/user/<username>', methods = ["GET", "POST"])
 def user(username):
