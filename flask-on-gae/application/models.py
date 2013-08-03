@@ -7,7 +7,7 @@ class User(db.Model):
     email = db.EmailProperty()
     passwd = db.StringProperty()
     tasks = db.ListProperty(db.Key)
-    friends = db.ListProperty(db.IntegerProperty)
+    friends = db.ListProperty(long)
 
 class Task(db.Model):
     description = db.StringProperty(required = True)  
