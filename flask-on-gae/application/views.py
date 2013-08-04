@@ -77,8 +77,10 @@ def loginPost():
 def newTask():
     desc = request.form['description']
     duration = int(request.form['duration'])
+    done = bool(request.form['done'])
+    isPrivate = bool(request.form['isPrivate'])
 
-    newTask = Task(description = desc, duration = duration)
+    newTask = Task(description = desc, duration = duration, done = done, isPrivate = isPrivate)
     key = newTask.save()
 
     app.logger.debug("added %s   %s  %s" % (key, desc, type(key)))
@@ -96,7 +98,7 @@ def allTask():
     app.logger.debug(session['user'].tasks)
     tasks = db.get(session['user'].tasks[:15])
 
-    task_list = [{"description": task.description, "duration": task.duration} for task in tasks]
+    task_list = [{"description": task.description, "duration": task.duration, "done": task.done, "isPrivate": task.isPrivate} for task in tasks]
     return jsonify({"task_list": task_list})
 
 @app.route('/gettask')
