@@ -11,13 +11,26 @@ $( document ).ready(function() {
             });
     });
 
-    $("#getTask").click(function() {
+    $("#giveTask").click(function() {
+        var duration = $("#duration2")
+        $.get("/gettasks", {"duration": duration}, 
+            function(data){
+                displayTask();
+            });
+
+    });
+
+    $("#gettask").click(function() {
 
         window.location = "/gettask";
 
     }); 
        
 });
+
+function displayTask() {
+
+}
 
 function getTasks() {
     // data :{[{description, duration},]}
