@@ -36,7 +36,24 @@ def loginPost():
 @app.route('/tasks/new', methods=["POST"])
 def newTask():
     desc = request.form['description']
+<<<<<<< HEAD
     duration = int(request.form['duration'])    
     newTask = Task(description = desc, duration = duration)
     key = newTask.save();    
     return render_template('test.html', data = key)
+=======
+    duration = int(request.form['duration'])
+
+    newTask = Task(description = desc, duration = duration)
+    key = newTask.save();
+
+    data = {"status": "ok"}
+    return jsonify(data)
+
+@app.route('/tasks', methods=["GET"])
+def allTask():
+    q = Task.all()
+    task_list = [{"description": task.description, "duration": task.duration} for task in q.run(limit=15)]
+    return jsonify({"task_list": task_list})
+     
+>>>>>>> b109d1ba1bce8e30f6275e3adfebb7b1b8ad9abf
