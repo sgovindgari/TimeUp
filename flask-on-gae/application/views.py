@@ -44,15 +44,17 @@ def loginPost():
             profile = graph.get_object("me")
 
             # check if this user exists in datastore
-            q = User.all().filter('id =', uid)
+            q = User.all().filter("uid =", uid)
             user_count = q.count()
+            app.logger.debug(user_count)
             if user_count == 1:
                 session['user'] = q.get()
                 app.logger.debug("fetched user")
+                name = session['user'].username
             else:
                 app.logger.debug("create new user")
                 name = profile["name"]
-                newUser = User(id = int(uid), username = name)
+                newUser = User(uid = uid, username = name)
                 newUser.save()
                 session['user'] = newUser
         except facebook.GraphAPIError:
