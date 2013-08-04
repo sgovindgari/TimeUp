@@ -87,7 +87,7 @@ def newTask():
         data = {"status": "not ok"}
         return jsonify(data)
 
-    newTask = Task(description = desc, duration = duration, done=False, isPrivate = isPrivate)
+    newTask = Task(description = desc, duration = duration, done=False, isPrivate = isPrivate, ownername = session['user'].username)
 
     if 'user' in session:
         user = session['user'] 
@@ -131,10 +131,11 @@ def giveMeTask():
             all_task.extend(friend_tasks)
 
 
-    # my task
-    user = session['user'] 
-    tasks = user.task_set
-    all_task.extend(tasks)
+    if not q_friend:
+        # my task
+        user = session['user'] 
+        tasks = user.task_set
+        all_task.extend(tasks)
 
     task_list = []
     for task in all_task:

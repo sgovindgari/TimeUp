@@ -111,16 +111,18 @@ function getTasks2() {
                     var done = data.task_list[i].done;
                     var isPrivate = data.task_list[i].isPrivate;
                     var timestamp = data.task_list[i].timestamp.substring(0,10);
+                    var ownername = data.task_list[i].ownername;
 
 
                         if(isPrivate) {
                             privateField = "private";
                         }
 
-                    $("#tasks").append("<li id='tasktable' class='row " + privateField + "' value='" + key + "'>" +
+                    $("#tasks").append("<li id='tasktable' class='row' value='" + key + "'>" +
                             "<div class='description'>" + description + "</div> <div class='attributes'>" + 
                             /*"<div class='isPrivate'>" + isPrivate + " </div>" + */
                             "<div class='duration'>" + duration + " minutes </div>" + 
+                            "<div class='ownername'>" + ownername + " </div>" + 
                             "<div class='timestamp'>" + timestamp + "</div> </div></li>");
                 }
             });
