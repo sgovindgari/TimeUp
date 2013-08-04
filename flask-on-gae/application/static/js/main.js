@@ -17,9 +17,23 @@ $( document ).ready(function() {
 
     $("#givetask").click(function() {
         var duration = $("#duration2")
-        $.get("/gettasks", {"duration": duration}, 
+        var me = $("#me")
+        var friend = $("#friend")
+
+        $.get("/gettasks", {"duration": duration, "me": me, "friend": friend}, 
             function(data){
-                displayTask(data);
+                $("#tasks").text("");
+                for (var i = 0; i < data.task_list.length; i++) {
+                    //var tempelem = document.createElement('di
+                    var description = data.task_list[i].description;
+                    var duration = data.task_list[i].duration;
+                    var key = data.task_list[i].key;
+
+                    $("#tasks").append("<li class='row' value='" + key + "'>" +
+                            "<div class='description'>" + description + "</div>" + 
+                            "<div class='duration'>" + duration + " minutes </div>" + 
+                            "</li>");
+                }
             });
 
     });
