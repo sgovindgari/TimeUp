@@ -68,6 +68,7 @@ def loginPost():
         data = "success"
     return data
 
+@login_required
 @app.route('/tasks/new', methods=["POST"])
 @login_required
 def newTask():
@@ -79,7 +80,7 @@ def newTask():
     key = newTask.save()
 
     app.logger.debug("added %s   %s  %s" % (key, desc, type(key)))
-    if key:
+    if key and 'user' in session:
         user = session['user'] 
         user.tasks.insert(0, key)
         user.save()
@@ -87,6 +88,8 @@ def newTask():
 
     data = {"status": "ok"}
     return jsonify(data)
+
+@login_required
 
 # give me a task
 @app.route('/gettasks', methods=["GET"])
