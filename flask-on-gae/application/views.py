@@ -8,7 +8,6 @@ import geopy, geopy.distance
 import time, random, urllib, hashlib, json
 import facebook
 
-<<<<<<< HEAD
 from functools import wraps
 from flask import request
 
@@ -29,8 +28,6 @@ def login_required(f):
 uid = ""
 
 @login_required
-=======
->>>>>>> 4f310191090bb71cfd2f21ce254de5e2c908f41c
 @app.route('/loggedin')
 def index():
     if 'user' in session:
