@@ -31,7 +31,11 @@ def loginPost():
 	    newUser.save()
 	except facebook.GraphAPIError:
 	    name = "token Error"
-    return render_template('test.html', data = name)
+	if  name == "token Error":
+	    data = name
+	else:
+	    data = "success"
+    return data
     
 @app.route('/tasks/new', methods=["POST"])
 def newTask():

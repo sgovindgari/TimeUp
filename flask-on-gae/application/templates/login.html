@@ -87,10 +87,10 @@
             function loginInFlask(uid, token) {
                 $.post("/login", {"uid": uid, "token": token},
                 function(data) {
-                    if (data.status == "success") {
-                        alert("backend login ok");
+                    if (data == "success") {
+                        console.log("backend login ok");
                         } else {
-                        alert("backend login failed");
+                        console.log("backend login failed");
                     }
                 });
             }
