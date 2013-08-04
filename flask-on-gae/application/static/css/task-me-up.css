@@ -1,6 +1,7 @@
 
 body {
-	background: url("{{ url_for('static', filename='images/retro_intro.png') }}");
+
+
 }
 
 h1
@@ -34,11 +35,13 @@ h1
 
 #container{
 	padding-top: 20px;
+
 }
 
 #logout {
 	float: right;
 }
+
 
 #addTask {
 	font-size: 24px;
@@ -49,9 +52,29 @@ h1
 	font-size: 24px;
 }
 
+#buttons {
+	margin-left: auto;
+	margin-right: auto;
+}
 #buttons img {
 	max-height: 100px;
 	max-width: 100px;
 	padding: 10px;
+}
+
+form{
+	margin-top: 20px;
+}
+
+form input[type="text"] {
+	font-size: 18px;
+	height: 32px;
+}
+
+form input[type="submit"] {
+	font-size: 18px;
+	height: 34 px;
+	background-color: 1abc9c;
+	border-style: none;
 }
 

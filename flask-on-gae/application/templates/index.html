@@ -1,7 +1,7 @@
 <html lang ="en">
 
 <head>
-  <title>Circles</title>
+  <title>Task Me</title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0' name='viewport' />
   <meta name="viewport" content="width=device-width" />
 
@@ -36,7 +36,7 @@
 	</div>
 
 
-	<div id="container" class="span10 offset2">
+	<div id="container" class="span10 offset1">
 		<div id="buttons">
 			<button class="btn btn-primary" id="addTask">
 				<img src="{{ url_for('static', filename='images/icons/Clipboard@2x.png') }}"/>Add Task
@@ -47,7 +47,7 @@
 		</div>
 		<div id="newTask">
 			<form action="/tasks/new" method="post">
-				<input type="text" name="description"/>
+				<input class="span6" type="text" name="description" placeholder="feed the dog"/>
 				<select name="duration">
 					<option value="10">10 minutes</option>
 					<option value="20">20 minutes</option>
@@ -56,7 +56,7 @@
 					<option value="50">50 minutes</option>
 					<option value="60">60 minutes</option>
 				</select>
-				<input type="submit" value="Submit" />
+				<input type="submit" value="Add Task" />
 
 			</form>	
 		</div>
@@ -72,6 +72,8 @@
 
 	</div>
 </body>
+
+<script src="js/bootstrap-select.js"></script>
 
 </html>
 
