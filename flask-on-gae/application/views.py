@@ -14,7 +14,7 @@ from flask import request
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if "user" in session:
+        if "user" in session and request.isAuthenticated():
             return redirect(url_for('login', next=request.url))
         return f(*args, **kwargs)
     return decorated_function
@@ -28,6 +28,7 @@ uid = ""
 @login_required
 @app.route('/loggedin')
 def index():
+    app.logger.debug(session['user'])
     return render_template('index.html')
 
 # Return the html for login
