@@ -136,11 +136,12 @@ def allTask():
 def deleteTask():
     return render_template('gettask.html', data= tasks)
 
-@app.route('/tasks', methods=["PUT"])
+@app.route('/finishtasks', methods=["POST"])
 @login_required
 def finishTask():
    task = db.get(request.args.get('id'))
-   task.done = true;
+   task.done = true
+   return jsonify(task)
 
 @app.route('/gettask')
 @login_required
