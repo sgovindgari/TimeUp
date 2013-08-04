@@ -1,5 +1,6 @@
 $( document ).ready(function() {
     
+    getTasks();
     $("#addTask").click(function() {
         var description = $("#description").val();
         var duration = $("#duration").val();
