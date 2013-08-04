@@ -25,15 +25,17 @@
 
 <body>
 	<div id="header" class="staticbar">
-		<div class="span9 pull-left">
+		<div class="pull-left">
 			<h1> Task Me Up </h1>
 		</div>
-		<div class="span3 pull-right">
+		<div class="pull-right">
 			<button class="btn btn-info" id="logout">
 				logout
 			</button>
 		</div>
 	</div>
+
+
 	<div id="container" class="span10 offset2">
 		<div id="buttons">
 			<button class="btn btn-primary" id="addTask">
@@ -43,9 +45,20 @@
 				<img src="{{ url_for('static', filename='images/icons/Clipboard@2x.png') }}"/>Get Task
 			</button>
 		</div>
-		
+		<div id="tasks">
+			<ol>
+			{% for task in tasks %}
+				<li>
+					<a href=""></a>
+				</li>
+			{% endfor %}
+			</ol>
+		</div>
+
 	</div>
 </body>
 
 </html>
+
+
 
