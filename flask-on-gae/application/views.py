@@ -44,7 +44,12 @@ def newTask():
     newTask = Task(description = desc, duration = duration)
     key = newTask.save();
 
-    return render_template('test.html', data = key)
+    data = {"key": key}
+    return jsonify(data)
 
+@app.route('/tasks', methods=["GET"])
+def allTask():
+    q = Task.all()
 
-
+    task_list = [task for task in q.run(limit=15)]
+     
