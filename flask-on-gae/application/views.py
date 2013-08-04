@@ -110,7 +110,7 @@ def giveMeTask():
         key = task.key()
         if task:
             task_list.append({"description": task.description, "duration": task.duration, "done": task.done, "isPrivate": task.isPrivate, "key": str(key), "timestamp": str(task.timestamp)})
-
+    session['my_task_list'] = task_list
     return jsonify({"task_list": task_list})
 
 @app.route('/tasks', methods=["GET"])
@@ -127,7 +127,10 @@ def allTask():
 
     return jsonify({"task_list": task_list})
 
-@app.route('/gettask')
+@app.route('/gettask', methods=['POST'])
 @login_required
 def gettask():
-    return render_template('gettask.html')
+    tasks = Task.all();
+    tasks.filter("duration =", str(request.form['duration']));
+    app.logger.debug(str(request.form['duration']))
+    return render_template('gettask.html', data = tasks)
