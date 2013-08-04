@@ -15,7 +15,7 @@ $( document ).ready(function() {
         var duration = $("#duration2")
         $.get("/gettasks", {"duration": duration}, 
             function(data){
-                displayTask();
+                displayTask(data);
             });
 
     });
@@ -29,7 +29,7 @@ $( document ).ready(function() {
 });
 
 function displayTask() {
-
+    console.log(data);
 }
 
 function getTasks() {
