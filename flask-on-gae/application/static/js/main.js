@@ -4,8 +4,12 @@ $( document ).ready(function() {
     $("#addTask").click(function() {
         var description = $("#description").val();
         var duration = $("#duration").val();
+        var isPrivate = $("#isPrivate").val();
 
-        $.post("/tasks/new", {"description": description, "duration": duration}, 
+        $.post("/tasks/new", 
+            {"description": description, 
+                "duration": duration,
+               "isPrivate": isPrivate}, 
             function(data) { 
                 getTasks();
             });
