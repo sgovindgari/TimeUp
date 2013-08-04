@@ -9,12 +9,13 @@ import time, random, urllib, hashlib, json
 import facebook
 
 
-@app.route('/')
+@app.route('/loggedin')
 def index():
     return render_template('index.html')
 
 # Return the html for login
-@app.route('/login')
+
+@app.route('/')
 def login():
     return render_template('login.html')
 
@@ -355,3 +356,13 @@ def update_savings():
 
         user.put()
         return "0"
+=======
+        try:
+            graph = facebook.GraphAPI(token)
+            profile = graph.get_object("me") 
+            name = profile["name"]
+        except GraphAPIError:
+            name = "token Error"
+
+    return render_template('test.html', data = name)
+>>>>>>> a50a8153e303932a87b71f44a12832f458927ced
