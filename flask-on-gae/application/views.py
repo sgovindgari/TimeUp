@@ -8,6 +8,8 @@ import geopy, geopy.distance
 import time, random, urllib, hashlib, json
 import facebook
 
+uid = ""
+
 @app.route('/loggedin')
 def index():
     return render_template('index.html')
@@ -15,7 +17,10 @@ def index():
     # Return the html for login
 @app.route('/')
 def login():
-    return render_template('login.html')
+    if uid == "":
+	return render_template('login.html')
+    else:
+	return render_template('index.html')
     
     # Handle the actual Login Post request
 @app.route('/login', methods=["POST"])
