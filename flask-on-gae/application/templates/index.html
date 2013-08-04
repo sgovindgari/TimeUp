@@ -40,7 +40,7 @@
 	<div id="container" class="span10 offset1">
 		<div id="buttons">
 			<button class="btn btn-primary" id="addTask">
-				<img src="{{ url_for('static', filename='images/icons/Clipboard@2x.png') }}"/>Add Task
+				<img src="{{ url_for('static', filename='images/icons/Clipboard2@2x.png') }}"/>Add Task
 			</button>
 			<button class="btn btn-inverse" id="getTask">
 				<img src="{{ url_for('static', filename='images/icons/Clipboard@2x.png') }}"/>Give me a Task
@@ -48,7 +48,7 @@
 		</div>
 		<div id="newTask">
 			<form>
-                <div id="isPrivate" class="btn btn-primary" value="false">Private</div>
+                <div id="isPrivate" class="btn btn-inverse" value="false">public </div>
 				<input id="description" class="span6" type="text" name="description" placeholder="feed the dog"/>
 				<select id="duration" name="duration">
 					<option value="10">10 minutes</option>

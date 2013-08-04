@@ -109,7 +109,7 @@ def giveMeTask():
     for task in tasks:
         key = task.key()
         if task:
-            task_list.append({"description": task.description, "duration": task.duration, "done": task.done, "isPrivate": task.isPrivate, "key": str(key)})
+            task_list.append({"description": task.description, "duration": task.duration, "done": task.done, "isPrivate": task.isPrivate, "key": str(key), "timestamp": str(task.timestamp)})
 
     return jsonify({"task_list": task_list})
 
@@ -123,7 +123,7 @@ def allTask():
     for task in tasks_of_user:
         key = task.key()
         if task:
-            task_list.append({"description": task.description, "duration": task.duration, "done": task.done, "isPrivate": task.isPrivate, "key": str(key)})
+            task_list.append({"description": task.description, "duration": task.duration, "done": task.done, "isPrivate": task.isPrivate, "key": str(key), "timestamp": str(task.timestamp)})
 
     return jsonify({"task_list": task_list})
 

@@ -52,12 +52,14 @@ $( document ).ready(function() {
 
     $("#isPrivate").click(function() {
         console.log($(this).attr("value"));
-        if ($(this).attr("value") == "true") {
-            $(this).attr("value", "false");
-            $(this).attr("class", "btn btn-primary");
-        } else {
+        if ($(this).attr("value") == "false") {
             $(this).attr("value", "true");
-            $(this).attr("class", "btn btn-info");
+            $(this).attr("class", "btn btn-primary");
+            $(this).text("private");
+        } else {
+            $(this).attr("value", "false");
+            $(this).attr("class", "btn btn-inverse");
+            $(this).text("public");
         }
     });
 });
@@ -75,12 +77,14 @@ function getTasks() {
                     var key = data.task_list[i].key;
                     var done = data.task_list[i].done;
                     var isPrivate = data.task_list[i].isPrivate;
+                    var timestamp = data.task_list[i].timestamp;
 
                     $("#tasks").append("<li class='row' value='" + key + "'>" +
                             "<div class='done'>" + done + " </div>" + 
                             "<div class='isPrivate'>" + isPrivate + " </div>" + 
                             "<div class='description'>" + description + "</div>" + 
                             "<div class='duration'>" + duration + " minutes </div>" + 
+                            "<div class='timestamp'>" + timestamp + "</div>" + 
                             "</li>");
                 }
             });

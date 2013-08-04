@@ -14,5 +14,5 @@ class Task(db.Model):
     isPrivate = db.BooleanProperty(required=True)
 
     owner = db.ReferenceProperty(User)
-
+    timestamp = db.DateTimeProperty(auto_now=True)
     
