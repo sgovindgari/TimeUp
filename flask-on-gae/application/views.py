@@ -105,9 +105,10 @@ def newTask():
 def giveMeTask():
 
     q_duration = request.form['duration']
-    q_me = request.form['me']
-    q_friend = request.form['me']
+    q_me = request.form['me'] == 'true'
+    q_friend = request.form['friend'] == 'true'
 
+    app.logger.debug("friend bool is : %s " % q_friend)
     if q_friend and 'token' in session:
         graph = facebook.GraphAPI(session['token'])
         friends = graph.get_connections("me", "friends")
@@ -119,8 +120,10 @@ def giveMeTask():
     # friends
     for uid in friend_id_list:
         friend = User.all().filter("uid =", uid).get()
-        friend_tasks = friend.task_set
-        all_task.extend(friend_tasks)
+        app.logger.debug(type(friend))
+        if friend:
+            friend_tasks = friend.task_set
+            all_task.extend(friend_tasks)
 
     # my task
     user = session['user'] 
@@ -148,6 +151,7 @@ def allTask():
             task_list.append({"description": task.description, "duration": task.duration, "done": task.done, "isPrivate": task.isPrivate, "key": str(key), "timestamp": str(task.timestamp)})
 
     return jsonify({"task_list": task_list})
+
 #TODO
 @app.route('/deletetask', methods=["POST"])
 @login_required
@@ -158,12 +162,13 @@ def deleteTask():
     app.logger.debug(request.args.get('key'))
     return render_template('gettask.html', data= tasks)
 
-@app.route('/finishtasks', methods=["POST"])
+
+
+@app.route('/tasks', methods=["PUT"])
 @login_required
 def finishTask():
    task = db.get(request.args.get('id'))
-   task.done = true
-   return jsonify(task)
+   task.done = true;
 
 @app.route('/gettask')
 @login_required
