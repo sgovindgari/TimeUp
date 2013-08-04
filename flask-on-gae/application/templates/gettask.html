@@ -38,7 +38,6 @@
 
 	<div id="container" class="span10 offset1">
 		<div class="hero-unit">
-			<form id="gettask"> 
 				Give me a  
 				<select id="duration2" name="duration">
 					<option value="10">10 minute</option>
@@ -48,13 +47,14 @@
 					<option value="50">50 minute</option>
 					<option value="60">60 minute</option>
 				</select>
-				task
-
+                Task
+			    <button class="btn btn-inverse pull-right" id="giveTask" > Go </button>
+                <br>
+                <div>
 					<input id="me" type="checkbox" value=1> From my tasklist </input>
+                    <br>
 					<input id="friend" type="checkbox" value=2> From my friends </input>
-
-			</form>
-			<button class="btn btn-inverse" id="giveTask" style="float: right"> Go </button>
+                </div>
 		</div>
 		<ul class="span6 tasklist" id="tasks">
             </ul> 
