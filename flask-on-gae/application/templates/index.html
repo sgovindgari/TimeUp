@@ -46,19 +46,21 @@
 			</button>
 		</div>
 		<div id="newTask">
-			<form>
+			<form action="/tasks/new" method="post">
 				<input type="text" name="description"/>
 				<select name="duration">
 					<option value="10">10 minutes</option>
-					<option value="10">10 minutes</option>
-					<option value="10">10 minutes</option>
-					<option value="10">10 minutes</option>
-					<option value="10">10 minutes</option>
-					<option value="10">10 minutes</option>
+					<option value="20">20 minutes</option>
+					<option value="30">30 minutes</option>
+					<option value="40">40 minutes</option>
+					<option value="50">50 minutes</option>
+					<option value="60">60 minutes</option>
 				</select>
+				<input type="submit" value="Submit" />
+
 			</form>	
 		</div>
-		<div id="tasks">
+		<!--<div id="tasks">
 			<ol>
 			{% for task in tasks %}
 				<li>
@@ -66,7 +68,7 @@
 				</li>
 			{% endfor %}
 			</ol>
-		</div>
+		</div>-->
 
 	</div>
 </body>

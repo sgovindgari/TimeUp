@@ -38,10 +38,13 @@ def loginPost():
 @app.route('/tasks/new', methods=["POST"])
 def newTask():
     desc = request.form['description']
-    duration = request.form['duration']
+    duration = int(request.form['duration'])
 
 
     newTask = Task(description = desc, duration = duration)
     key = newTask.save();
 
-    
+    return render_template('test.html', data = key)
+
+
+
