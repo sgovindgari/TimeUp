@@ -69,12 +69,14 @@ function getTasks() {
                     var key = data.task_list[i].key;
                     var done = data.task_list[i].done;
                     var isPrivate = data.task_list[i].isPrivate;
+                    var timestamp = data.task_list[i].timestamp;
 
                     $("#tasks").append("<li class='row' value='" + key + "'>" +
                             "<div class='done'>" + done + " </div>" + 
                             "<div class='isPrivate'>" + isPrivate + " </div>" + 
                             "<div class='description'>" + description + "</div>" + 
                             "<div class='duration'>" + duration + " minutes </div>" + 
+                            "<div class='timestamp'>" + timestamp + "</div>" + 
                             "</li>");
                 }
             });

@@ -12,4 +12,5 @@ class Task(db.Model):
     duration = db.IntegerProperty(required = True)
     done = db.BooleanProperty(required=True)
     isPrivate = db.BooleanProperty(required=True)
+    timestamp = db.DateTimeProperty(auto_now=True)
     
