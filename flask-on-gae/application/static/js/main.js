@@ -13,13 +13,13 @@ $( document ).ready(function() {
 });
 
 function getTasks() {
+    // data :{[{description, duration},]}
     $.get("/tasks", 
             function(data) {
-                if (data.status == "success") {
-                    alert("backend login ok");
-                } else {
-                    alert("backend login failed");
+                for (var i = 0; i < data.task_list.length; i++) {
+                    var description = data.task_list[i].description;
+                    var duration = data.task_list[i].duration;
+                    $("#tasks").append( "<p>" + description + ", " + duration + "</p>");
                 }
             });
-    
 }

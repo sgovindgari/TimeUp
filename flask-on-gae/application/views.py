@@ -40,7 +40,6 @@ def newTask():
     desc = request.form['description']
     duration = int(request.form['duration'])
 
-
     newTask = Task(description = desc, duration = duration)
     key = newTask.save();
 
@@ -50,6 +49,6 @@ def newTask():
 @app.route('/tasks', methods=["GET"])
 def allTask():
     q = Task.all()
-
     task_list = [task for task in q.run(limit=15)]
+    return jsonify({"task_list": data})
      
