@@ -83,7 +83,8 @@ function getTasks() {
                     var key = data.task_list[i].key;
                     var done = data.task_list[i].done;
                     var isPrivate = data.task_list[i].isPrivate;
-                    var timestamp = data.task_list[i].timestamp;
+                    var timestamp = data.task_list[i].timestamp.substring(0,10);
+                    
                     var private = "public";
                     var done = "not done"
 
