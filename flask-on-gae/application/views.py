@@ -43,12 +43,12 @@ def newTask():
     newTask = Task(description = desc, duration = duration)
     key = newTask.save();
 
-    data = {"key": key}
+    data = {"status": "ok"}
     return jsonify(data)
 
 @app.route('/tasks', methods=["GET"])
 def allTask():
     q = Task.all()
-    task_list = [task for task in q.run(limit=15)]
-    return jsonify({"task_list": data})
+    task_list = [{"description": task.description, "duration": task.duration} for task in q.run(limit=15)]
+    return jsonify({"task_list": task_list})
      

@@ -16,6 +16,7 @@ function getTasks() {
     // data :{[{description, duration},]}
     $.get("/tasks", 
             function(data) {
+                $("#tasks").text("");
                 for (var i = 0; i < data.task_list.length; i++) {
                     var description = data.task_list[i].description;
                     var duration = data.task_list[i].duration;
