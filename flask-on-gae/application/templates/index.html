@@ -47,10 +47,9 @@
 			</button>
 		</div>
 		<div id="newTask">
-			<form action="/tasks/new" method="post">
-				<input id="isPrivate" type="checkbox" value="isPrivate"> Private    
+			<form>
+                <div id="isPrivate" class="btn btn-info" value="false"></div>
 				<input id="description" class="span6" type="text" name="description" placeholder="feed the dog"/>
-                <input id="isPrivate" value="false" type="hidden"/>
 				<select id="duration" name="duration">
 					<option value="10">10 minutes</option>
 					<option value="20">20 minutes</option>

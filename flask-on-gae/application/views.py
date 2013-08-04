@@ -74,9 +74,9 @@ def loginPost():
 def newTask():
     desc = request.form['description']
     duration = int(request.form['duration'])
-    isPrivate = request.form['isPrivate'] == 'true'
+    isPrivate = request.form['isPrivate'] == 'false'
 
-    newTask = Task(description = desc, duration = duration, isPrivate = isPrivate)
+    newTask = Task(description = desc, duration = duration, done=False, isPrivate = isPrivate)
     key = newTask.save()
 
     app.logger.debug("added %s   %s  %s" % (key, desc, type(key)))

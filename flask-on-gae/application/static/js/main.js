@@ -15,26 +15,21 @@ $( document ).ready(function() {
             });
     });
 
-    $("#giveTask").click(function() {
-        var duration = $("#duration2")
-        $.get("/gettasks", {"duration": duration}, 
-            function(data){
-                displayTask(data);
-            });
-
-    });
-
-    $("#gettask").click(function() {
-
+    $("#getTask").click(function() {
         window.location = "/gettask";
-
     }); 
-       
-});
 
-function displayTask() {
-    console.log(data);
-}
+    $("#isPrivate").click(function() {
+        console.log($(this).attr("value"));
+        if ($(this).attr("value") == "true") {
+            $(this).attr("value", "false");
+            $(this).attr("class", "btn btn-primary");
+        } else {
+            $(this).attr("value", "true");
+            $(this).attr("class", "btn btn-info");
+        }
+    });
+});
 
 function getTasks() {
     // data :{[{description, duration},]}
