@@ -54,7 +54,6 @@ $( document ).ready(function() {
               });
             });
 
-          });
 
       $("#isPrivate").click(function() {
           console.log($(this).attr("value"));
