@@ -28,7 +28,8 @@ uid = ""
 @login_required
 @app.route('/loggedin')
 def index():
-    app.logger.debug(session['user'])
+    if 'user' in session:
+        app.logger.debug(session['user'])
     return render_template('index.html')
 
 # Return the html for login
@@ -95,7 +96,8 @@ def newTask():
 @login_required
 @app.route('/tasks', methods=["GET"])
 def allTask():
-    app.logger.debug(session['user'].tasks)
+    if 'user' in session:
+        app.logger.debug(session['user'].tasks)
     tasks = db.get(session['user'].tasks[:15])
 
     task_list = [{"description": task.description, "duration": task.duration, "done": task.done, "isPrivate": task.isPrivate} for task in tasks]
