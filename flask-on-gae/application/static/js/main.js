@@ -142,7 +142,8 @@ function getTasks() {
                     var key = data.task_list[i].key;
                     console.log(data.task_list[i].done )
                     if (data.task_list[i].done == true || data.task_list[i].done == 'true') {
-                        var done = "done"
+                        var done = "done";
+                        continue;
                     } else {
                         var done = 'not done'; 
                     }
