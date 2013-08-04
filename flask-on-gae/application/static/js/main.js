@@ -15,7 +15,16 @@ $( document ).ready(function() {
             });
     });
 
-    $("#getTask").click(function() {
+    $("#givetask").click(function() {
+        var duration = $("#duration2")
+        $.get("/gettasks", {"duration": duration}, 
+            function(data){
+                displayTask(data);
+            });
+
+    });
+
+    $("#gettask").click(function() {
         window.location = "/gettask";
     }); 
 
