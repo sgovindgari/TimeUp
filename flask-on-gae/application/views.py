@@ -23,6 +23,8 @@ def login_required(f):
 #             return 'Logged in as %s' % escape(session['username'])
 #             return 'You are not logged in'
 
+uid = ""
+
 @login_required
 @app.route('/loggedin')
 def index():
@@ -32,10 +34,12 @@ def index():
 
 @app.route('/')
 def login():
-    return render_template('login.html')
-
-# Handle the actual Login Post request
-@login_required
+    # Handle the actual Login Post request
+    if uid == "":
+        return render_template('login.html')
+    else:
+        return render_template('index.html')
+    
 @app.route('/login', methods=["POST"])
 def loginPost():
     uid = request.form['uid']
@@ -93,4 +97,7 @@ def allTask():
 
     task_list = [{"description": task.description, "duration": task.duration} for task in tasks]
     return jsonify({"task_list": task_list})
-     
+
+@app.route('/gettask')
+def gettask():
+    return render_template('gettask.html')

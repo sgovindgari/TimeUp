@@ -23,8 +23,8 @@
   <script src="/static/js/main.js" type="text/javascript"></script>
 
 </head>
-
 <body>
+
 	<div id="header" class="staticbar">
 		<div class="pull-left">
 			<h1> Task Me Up </h1>
@@ -36,45 +36,27 @@
 		</div>
 	</div>
 
-
 	<div id="container" class="span10 offset1">
-		<div id="buttons">
-			<button class="btn btn-primary" id="addTask">
-				<img src="{{ url_for('static', filename='images/icons/Clipboard@2x.png') }}"/>Add Task
-			</button>
-			<button class="btn btn-inverse" id="getTask">
-				<img src="{{ url_for('static', filename='images/icons/Clipboard@2x.png') }}"/>Give me a Task
-			</button>
-		</div>
-		<div id="newTask">
-			<form action="/tasks/new" method="post">
-				<input id="description" class="span6" type="text" name="description" placeholder="feed the dog"/>
+		<div class="hero-unit">
+			Give me a  
 				<select id="duration" name="duration">
-					<option value="10">10 minutes</option>
-					<option value="20">20 minutes</option>
-					<option value="30">30 minutes</option>
-					<option value="40">40 minutes</option>
-					<option value="50">50 minutes</option>
-					<option value="60">60 minutes</option>
+					<option value="10">10 minute</option>
+					<option value="20">20 minute</option>
+					<option value="30">30 minute</option>
+					<option value="40">40 minute</option>
+					<option value="50">50 minute</option>
+					<option value="60">60 minute</option>
 				</select>
-			</form>	
-		</div>
+			task
 
-		<div id="tasks">
+			<button class="btn btn-inverse" id="givetask" style="float: right"> Go </button>
 		</div>
-
 	</div>
 </body>
+
     <script src="{{ url_for('static', filename='js/jquery-1.8.3.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/jquery.ui.touch-punch.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap-select.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/bootstrap-switch.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/flatui-checkbox.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/flatui-radio.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/application.js') }}"></script>
-
+        <script src="{{ url_for('static', filename='js/application.js') }}"></script>
 </html>
-
-
-
