@@ -2,7 +2,8 @@ application: taskmeup
 version: 1
 runtime: python27
 api_version: 1
-threadsafe: false 
+threadsafe: true 
+secure: always
 
 handlers:
 - url: /favicon\.ico
