@@ -38,7 +38,7 @@ $( document ).ready(function() {
 
     });
 
-    $("#gettask").click(function() {
+    $("#getTask").click(function() {
         window.location = "/gettask";
     }); 
 
@@ -46,10 +46,10 @@ $( document ).ready(function() {
         console.log($(this).attr("value"));
         if ($(this).attr("value") == "true") {
             $(this).attr("value", "false");
-            $(this).attr("class", "btn btn-primary");
+            $(this).attr("class", "btn btn-danger");
         } else {
             $(this).attr("value", "true");
-            $(this).attr("class", "btn btn-info");
+            $(this).attr("class", "btn btn-primary");
         }
     });
 });
