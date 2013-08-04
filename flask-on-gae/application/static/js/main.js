@@ -11,7 +11,7 @@ $( document ).ready(function() {
             });
     });
 
-    $("#giveTask").click(function() {
+    $("#givetask").click(function() {
         var duration = $("#duration2")
         $.get("/gettasks", {"duration": duration}, 
             function(data){
