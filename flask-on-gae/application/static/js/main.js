@@ -13,7 +13,7 @@ $( document ).ready(function() {
 
     $("#getTask").click(function() {
 
-        window.location = "/gettask"
+        window.location = "/gettask";
 
     }); 
        
@@ -24,10 +24,12 @@ function getTasks() {
     $.get("/tasks", 
             function(data) {
                 $("#tasks").text("");
+
                 for (var i = 0; i < data.task_list.length; i++) {
+                    //var tempelem = document.createElement('di
                     var description = data.task_list[i].description;
                     var duration = data.task_list[i].duration;
-                    $("#tasks").append( "<p>" + description + ", " + duration + "</p>");
+                    $("#tasks").append("<li class='row'>" + "<div class='description'>" + description + "</div> <div class='duration'>" + duration + " minutes </div> </li>");
                 }
             });
 }
