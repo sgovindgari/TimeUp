@@ -14,10 +14,8 @@ from flask import request
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if "user" in session and request.isAuthenticated():
+        if "user" in session:
             return redirect(url_for('login', next=request.url))
-        else:
-            app.logger.debug("user" in session)
         return f(*args, **kwargs)
     return decorated_function
 
@@ -91,6 +89,24 @@ def newTask():
     return jsonify(data)
 
 @login_required
+
+# give me a task
+@app.route('/gettasks', methods=["GET"])
+def giveMeTask():
+    if 'user' in session:
+        app.logger.debug(session['user'].tasks)
+
+    keys = session['user'].tasks[:15]
+    tasks = db.get(keys)
+
+    task_list = []
+    for key in keys:
+        task = db.get(key)
+        if task:
+            task_list.append({"description": task.description, "duration": task.duration, "done": task.done, "isPrivate": task.isPrivate, "key": str(key)})
+
+    return jsonify({"task_list": task_list})
+
 @app.route('/tasks', methods=["GET"])
 def allTask():
     if 'user' in session:
