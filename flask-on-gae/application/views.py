@@ -83,6 +83,10 @@ def newTask():
     duration = int(request.form['duration'])
     isPrivate = bool(request.form['isPrivate'])
 
+    if not desc or not duration:
+        data = {"status": "not ok"}
+        return jsonify(data)
+
     newTask = Task(description = desc, duration = duration, done=False, isPrivate = isPrivate)
 
     if 'user' in session:
@@ -147,22 +151,39 @@ def allTask():
     task_list = []
     for task in tasks_of_user:
         key = task.key()
+        if task and not task.done :
+            task_list.append({"description": task.description, "duration": task.duration, "done": task.done, "isPrivate": task.isPrivate, "key": str(key), "timestamp": str(task.timestamp)})
+
+    return jsonify({"task_list": task_list})
+
+@app.route('/tasksall', methods=["GET"])
+@login_required
+def allTask():
+    user = session['user'] 
+    tasks_of_user = user.task_set
+
+    task_list = []
+    for task in tasks_of_user:
+        key = task.key()
         if task:
             task_list.append({"description": task.description, "duration": task.duration, "done": task.done, "isPrivate": task.isPrivate, "key": str(key), "timestamp": str(task.timestamp)})
 
     return jsonify({"task_list": task_list})
 
-#TODO
 @app.route('/deletetask', methods=["POST"])
 @login_required
 def deleteTask():
-    task = Task.all()
-    tasks = task.filter("timestamp=", str(request.args.get('key')))
-    db.delete(tasks)
-    app.logger.debug(request.args.get('key'))
-    return render_template('gettask.html', data= tasks)
+   task = db.get(request.form['key'])
+   db.delete(task)
+   return "ok"
 
-
+@app.route('/finishtask', methods=["POST"])
+@login_required
+def deleteTask():
+   task = db.get(request.form['key'])
+   task.done = True; 
+   task.save()
+   return "ok"
 
 @app.route('/tasks', methods=["PUT"])
 @login_required
