@@ -49,3 +49,7 @@ def allTask():
     q = Task.all()
     task_list = [{"description": task.description, "duration": task.duration} for task in q.run(limit=15)]
     return jsonify({"task_list": task_list})
+
+@app.route('/gettask')
+def gettask():
+    return render_template('gettask.html')
