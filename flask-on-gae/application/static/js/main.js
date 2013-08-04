@@ -64,26 +64,19 @@ $( document ).ready(function() {
           $(this).text("private");
           }
           });
-
-      $(".tasklist").click(function(){
-          var value = $(this).val();
-          $.post("/deletetask", 
-            function(data){
-            $("#tasks").text("");
-            for (var i = 0; i < data.task_list.length; i++) {
-            //var tempelem = document.createElement('di
-              var description = data.task_list[i].description;
-              var duration = data.task_list[i].duration;
-              var key = data.task_list[i].key;
-
-              $("#tasks").append("<li class='row' value='" + key + "'>" +
-                  "<div class='description'>" + description + "</div>" + 
-                  "<div class='duration'>" + duration + " minutes </div>" + 
-                  "</li>");
-            }
+      
+       function deleteTask(value){
+            var key = value;
+            $.post("/deletetask", function(data){
+                getTasks();
             });
-            });
-
+        }
+      
+      $("#deleteButton").click(function(){
+        var value = $(this).attr("name");
+        deleteTask(value);
+      });       
+      
           function finishitem(id) {
           $.post("/tasks", {"id":id}, function(data) { 
             console.log(data);
@@ -106,20 +99,20 @@ $( document ).ready(function() {
                   var isPrivate = data.task_list[i].isPrivate;
                   var timestamp = data.task_list[i].timestamp.substring(0,10);
 
-                  var private = "public";
+                  var privateField = "public";
                   var done = "not done"
 
                     if(isPrivate) {
-                      private = "private";
+                      privateField = "private";
                     }
 
-                  $("#tasks").append("<li id='tasktable' class='row " + private + "' value='" + key + "'>" +
+                  $("#tasks").append("<li id='tasktable' class='row " + privateField + "' value='" + key + "'>" +
                       "<div class='description'>" + description + "</div> <div class='attributes'>" + 
                       "<div class='done'>" + done + " </div>" + 
                       /*"<div class='isPrivate'>" + isPrivate + " </div>" + */
                       "<div class='duration'>" + duration + " minutes </div>" + 
                       "<div class='timestamp'>" + timestamp + "</div> </div>" + 
-                      "</li>");
+                      "<button id='deleteButton' style='margin-left:300px; font-size:20px' name=" + key + ">X</button></li>");
                 }
                 });
           }

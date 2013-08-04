@@ -152,6 +152,10 @@ def allTask():
 @app.route('/deletetask', methods=["POST"])
 @login_required
 def deleteTask():
+    task = Task.all()
+    tasks = task.filter("timestamp=", str(request.args.get('key')))
+    db.delete(tasks)
+    app.logger.debug(request.args.get('key'))
     return render_template('gettask.html', data= tasks)
 
 @app.route('/finishtasks', methods=["POST"])
