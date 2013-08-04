@@ -9,6 +9,12 @@ $( document ).ready(function() {
             function(data) { 
                 getTasks();
             });
+    });
+
+    $("#getTask").click(function() {
+
+        window.location = "/gettask"
+
     }); 
        
 });
