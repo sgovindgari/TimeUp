@@ -99,6 +99,9 @@ h1
 	color: 27ae60;
 }
 
+#gettask {
+	display: inline-block;
+}
 form{
 	margin-top: 20px;
 }
