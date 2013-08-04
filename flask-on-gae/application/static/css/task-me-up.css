@@ -104,10 +104,12 @@ h1
 }
 form{
 	margin-top: 20px;
+	font-size: 14px;
 }
 
 form input[type="text"] {
 	margin-right: 10px;
+	margin-left: 10px;
 	margin-bottom: 0px;
 	font-size: 18px;
 	height: 38px;
@@ -118,5 +120,9 @@ form input[type="submit"] {
 	height: 34 px;
 	background-color: 1abc9c;
 	border-style: none;
+}
+
+form input[type="checkbox"] {
+	font-size: 14px;
 }
 
