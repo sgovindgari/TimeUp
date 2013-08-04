@@ -15,14 +15,14 @@ $( document ).ready(function() {
             });
     });
 
-    $(".tasklist li").click(finishitem($(this).attr("value")));
+    //$(".tasklist li").click(finishitem($(this).attr("value")));
 
-    $("#givetask").click(function() {
-        var duration = $("#duration2").val()
-        var me = $("#me").val()
-        var friend = $("#friend").val()
+    $("#giveTask").click(function() {
+        var duration = $("#duration2").val();
+        var me = $("#me").is(':checked');
+        var friend = $("#friend").is(':checked');
 
-        $.post("/gettask", {"duration": duration, "me": me, "friend": friend}, 
+        $.post("/givetask", {"duration": duration, "me": me, "friend": friend}, 
             function(data){
                 $("#tasks").text("");
                 for (var i = 0; i < data.task_list.length; i++) {
@@ -85,11 +85,7 @@ $( document ).ready(function() {
 });
 
 function finishitem(id) {
-    $.put("/tasks", 
-    {"id":id}, 
-    function(data) { 
-        getTasks();
-    });
+    $.post("/tasks", {"id":id}, function(data) { getTasks(); });
 }
 
 function getTasks() {
