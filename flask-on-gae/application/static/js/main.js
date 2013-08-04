@@ -64,6 +64,24 @@ $( document ).ready(function() {
             $(this).text("private");
         }
     });
+    
+    $(".tasklist").click(function(){
+        var value = $(this).val();
+        $.post("/deletetask", 
+            function(data){
+                $("#tasks").text("");
+                for (var i = 0; i < data.task_list.length; i++) {
+                    //var tempelem = document.createElement('di
+                    var description = data.task_list[i].description;
+                    var duration = data.task_list[i].duration;
+                    var key = data.task_list[i].key;
+
+                    $("#tasks").append("<li class='row' value='" + key + "'>" +
+                            "<div class='description'>" + description + "</div>" + 
+                            "<div class='duration'>" + duration + " minutes </div>" + 
+                            "</li>");
+                }
+        });
 });
 
 function finishitem(id) {
@@ -96,7 +114,7 @@ function getTasks() {
                         private = "private";
                     }
 
-                    $("#tasks").append("<li class='row " + private + "' value='" + key + "'>" +
+                    $("#tasks").append("<li id='tasktable' class='row " + private + "' value='" + key + "'>" +
                             "<div class='description'>" + description + "</div> <div class='attributes'>" + 
                             "<div class='done'>" + done + " </div>" + 
                             /*"<div class='isPrivate'>" + isPrivate + " </div>" + */
