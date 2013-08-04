@@ -148,7 +148,11 @@ def allTask():
             task_list.append({"description": task.description, "duration": task.duration, "done": task.done, "isPrivate": task.isPrivate, "key": str(key), "timestamp": str(task.timestamp)})
 
     return jsonify({"task_list": task_list})
-
+#TODO
+@app.route('/deletetask', methods=["POST"])
+@login_required
+def deleteTask():
+    return render_template('gettask.html', data= tasks)
 
 @app.route('/tasks', methods=["PUT"])
 @login_required
