@@ -83,7 +83,7 @@ def newTask():
     duration = int(request.form['duration'])
     isPrivate = bool(request.form['isPrivate'])
 
-    newTask = Task(description = desc, duration = duration, done=False, isPrivate = isPrivate)
+    newTask = Task(description = desc, duration = duration, done=False, isPrivate = isPrivate, ownername=session.get("user").username)
 
     if 'user' in session:
         user = session['user'] 
@@ -103,7 +103,6 @@ def newTask():
 @app.route('/givetask', methods=["POST"])
 @login_required
 def giveMeTask():
-
     q_duration = request.form['duration']
     q_me = request.form['me']
     q_friend = request.form['me']
@@ -111,6 +110,7 @@ def giveMeTask():
     if q_friend and 'token' in session:
         graph = facebook.GraphAPI(session['token'])
         friends = graph.get_connections("me", "friends")
+        session["friend_list"] =friends;
         friend_id_list = [friend['id'] for friend in friends['data']]
     else:
         friend_id_list = []
@@ -120,6 +120,8 @@ def giveMeTask():
     for uid in friend_id_list:
         friend = User.all().filter("uid =", uid).get()
         friend_tasks = friend.task_set
+        #for friend_task in friend_tasks:
+            #friend_task
         all_task.extend(friend_tasks)
 
     # my task
@@ -131,7 +133,7 @@ def giveMeTask():
     for task in all_task:
         key = task.key()
         if task and int(task.duration) == int(q_duration) :
-            task_list.append({"description": task.description, "duration": task.duration, "done": task.done, "isPrivate": task.isPrivate, "key": str(key), "timestamp": str(task.timestamp)})
+            task_list.append({"description": task.description, "duration": task.duration, "done": task.done, "isPrivate": task.isPrivate, "key": str(key), "timestamp": str(task.timestamp), "ownername": task.ownername})
     session['my_task_list'] = task_list
     return jsonify({"task_list": task_list})
 
@@ -145,7 +147,7 @@ def allTask():
     for task in tasks_of_user:
         key = task.key()
         if task:
-            task_list.append({"description": task.description, "duration": task.duration, "done": task.done, "isPrivate": task.isPrivate, "key": str(key), "timestamp": str(task.timestamp)})
+            task_list.append({"description": task.description, "duration": task.duration, "done": task.done, "isPrivate": task.isPrivate, "key": str(key), "timestamp": str(task.timestamp), "ownername": task.ownername})
 
     return jsonify({"task_list": task_list})
 #TODO
@@ -157,9 +159,10 @@ def deleteTask():
 @app.route('/finishtasks', methods=["POST"])
 @login_required
 def finishTask():
-   task = db.get(request.args.get('id'))
-   task.done = true
-   return jsonify(task)
+    app.logger.debug(request.form['id'])
+    task = db.get(request.form['id'])
+    task.done = true
+    return jsonify(task)
 
 @app.route('/gettask')
 @login_required
