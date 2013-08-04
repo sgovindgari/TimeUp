@@ -47,6 +47,7 @@ def loginPost():
             q = User.all().filter("uid =", uid)
             user_count = q.count()
             app.logger.debug(user_count)
+            session['token'] = token 
             if user_count == 1:
                 session['user'] = q.get()
                 app.logger.debug("fetched user")
@@ -72,6 +73,7 @@ def loginPost():
 @login_required
 def logout():
     session.pop("user", None)
+    session.pop("token", None)
     return "ok"
 
 @app.route('/tasks/new', methods=["POST"])
@@ -105,12 +107,28 @@ def giveMeTask():
     q_duration = request.form['duration']
     q_me = request.form['me']
     q_friend = request.form['me']
-    
+
+    if q_friend and 'token' in session:
+        graph = facebook.GraphAPI(session['token'])
+        friends = graph.get_connections("me", "friends")
+        friend_id_list = [friend['id'] for friend in friends['data']]
+    else:
+        friend_id_list = []
+
+    all_task = [] 
+    # friends
+    for uid in friend_id_list:
+        friend = User.all().filter("uid =", uid).get()
+        friend_tasks = friend.task_set
+        all_task.extend(friend_tasks)
+
+    # my task
     user = session['user'] 
     tasks = user.task_set
+    all_task.extend(tasks)
 
     task_list = []
-    for task in tasks:
+    for task in all_task:
         key = task.key()
         if task and int(task.duration) == int(q_duration) :
             task_list.append({"description": task.description, "duration": task.duration, "done": task.done, "isPrivate": task.isPrivate, "key": str(key), "timestamp": str(task.timestamp)})
