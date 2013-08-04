@@ -44,12 +44,14 @@ $( document ).ready(function() {
 
     $("#isPrivate").click(function() {
         console.log($(this).attr("value"));
-        if ($(this).attr("value") == "true") {
-            $(this).attr("value", "false");
-            $(this).attr("class", "btn btn-danger");
-        } else {
+        if ($(this).attr("value") == "false") {
             $(this).attr("value", "true");
             $(this).attr("class", "btn btn-primary");
+            $(this).text("private");
+        } else {
+            $(this).attr("value", "false");
+            $(this).attr("class", "btn btn-inverse");
+            $(this).text("public");
         }
     });
 });
