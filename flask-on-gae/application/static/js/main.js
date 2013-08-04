@@ -18,11 +18,11 @@ $( document ).ready(function() {
     $(".tasklist li").click(finishitem($(this).attr("value")));
 
     $("#givetask").click(function() {
-        var duration = $("#duration2")
-        var me = $("#me")
-        var friend = $("#friend")
+        var duration = $("#duration2").val()
+        var me = $("#me").val()
+        var friend = $("#friend").val()
 
-        $.get("/gettasks", {"duration": duration, "me": me, "friend": friend}, 
+        $.post("/gettask", {"duration": duration, "me": me, "friend": friend}, 
             function(data){
                 $("#tasks").text("");
                 for (var i = 0; i < data.task_list.length; i++) {
@@ -43,6 +43,14 @@ $( document ).ready(function() {
     $("#getTask").click(function() {
         window.location = "/gettask";
     }); 
+
+    $("#logout").click(function() {
+        FB.logout(function(response) {
+            $.get("/logout", function(data) {
+                window.location = "/";
+            });
+        });
+    });
 
     $("#isPrivate").click(function() {
         console.log($(this).attr("value"));

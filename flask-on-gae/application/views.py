@@ -19,10 +19,6 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
-# if 'username' in session:
-#             return 'Logged in as %s' % escape(session['username'])
-#             return 'You are not logged in'
-
 uid = ""
 
 @app.route('/loggedin')
@@ -48,13 +44,17 @@ def loginPost():
             profile = graph.get_object("me")
 
             # check if this user exists in datastore
-            q = User.all().filter('id =', uid)
+            q = User.all().filter("uid =", uid)
             user_count = q.count()
+            app.logger.debug(user_count)
             if user_count == 1:
                 session['user'] = q.get()
+                app.logger.debug("fetched user")
+                name = session['user'].username
             else:
+                app.logger.debug("create new user")
                 name = profile["name"]
-                newUser = User(id = int(uid), username = name)
+                newUser = User(uid = uid, username = name)
                 newUser.save()
                 session['user'] = newUser
         except facebook.GraphAPIError:
@@ -68,7 +68,12 @@ def loginPost():
         data = "success"
     return data
 
+@app.route('/logout', methods=["GET"])
 @login_required
+def logout():
+    session.pop("user", None)
+    return "ok"
+
 @app.route('/tasks/new', methods=["POST"])
 @login_required
 def newTask():
@@ -77,19 +82,20 @@ def newTask():
     isPrivate = bool(request.form['isPrivate'])
 
     newTask = Task(description = desc, duration = duration, done=False, isPrivate = isPrivate)
-    key = newTask.save()
 
-    app.logger.debug("added %s   %s  %s" % (key, desc, type(key)))
-    if key and 'user' in session:
+    if 'user' in session:
         user = session['user'] 
-        user.tasks.insert(0, key)
-        user.save()
+        #user.tasks.insert(0, key)
+        #user.save()
         session['user'] = user
+    
+    newTask.owner = session['user'].key()
+    key = newTask.save()
+    app.logger.debug("added %s   %s  %s" % (key, desc, type(key)))
+    time.sleep(0.5)
 
     data = {"status": "ok"}
     return jsonify(data)
-
-@login_required
 
 # give me a task
 @app.route('/gettasks', methods=["GET"])
@@ -98,32 +104,31 @@ def giveMeTask():
     if 'user' in session:
         app.logger.debug(session['user'].tasks)
 
-    keys = session['user'].tasks[:15]
-    tasks = db.get(keys)
+    user = session['user'] 
+    tasks = user.task_set
 
     task_list = []
-    for key in keys:
-        task = db.get(key)
+    for task in tasks:
+        key = task.key()
         if task:
             task_list.append({"description": task.description, "duration": task.duration, "done": task.done, "isPrivate": task.isPrivate, "key": str(key), "timestamp": str(task.timestamp)})
-
+    session['my_task_list'] = task_list
     return jsonify({"task_list": task_list})
 
 @app.route('/tasks', methods=["GET"])
 @login_required
 def allTask():
-    if 'user' in session:
-        app.logger.debug(session['user'].tasks)
-    keys = session['user'].tasks[:15]
-    tasks = db.get(keys)
+    user = session['user'] 
+    tasks_of_user = user.task_set
 
     task_list = []
-    for key in keys:
-        task = db.get(key)
+    for task in tasks_of_user:
+        key = task.key()
         if task:
             task_list.append({"description": task.description, "duration": task.duration, "done": task.done, "isPrivate": task.isPrivate, "key": str(key), "timestamp": str(task.timestamp)})
 
     return jsonify({"task_list": task_list})
+
 
 @app.route('/tasks', methods=["PUT"])
 @login_required
@@ -134,4 +139,7 @@ def finishTask():
 @app.route('/gettask')
 @login_required
 def gettask():
-    return render_template('gettask.html')
+    tasks = Task.all();
+    tasks.filter("duration =", str(request.form['duration']));
+    app.logger.debug(str(request.form['duration']))
+    return render_template('gettask.html', data = tasks)
