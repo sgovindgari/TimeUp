@@ -14,7 +14,7 @@ from flask import request
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if "user" in session:
+        if not "user" in session:
             return redirect(url_for('login', next=request.url))
         return f(*args, **kwargs)
     return decorated_function
@@ -25,8 +25,8 @@ def login_required(f):
 
 uid = ""
 
-@login_required
 @app.route('/loggedin')
+@login_required
 def index():
     if 'user' in session:
         app.logger.debug(session['user'])
@@ -69,6 +69,7 @@ def loginPost():
     return data
 
 @app.route('/tasks/new', methods=["POST"])
+@login_required
 def newTask():
     desc = request.form['description']
     duration = int(request.form['duration'])
@@ -89,6 +90,7 @@ def newTask():
 
 # give me a task
 @app.route('/gettasks', methods=["GET"])
+@login_required
 def giveMeTask():
     if 'user' in session:
         app.logger.debug(session['user'].tasks)
@@ -105,6 +107,7 @@ def giveMeTask():
     return jsonify({"task_list": task_list})
 
 @app.route('/tasks', methods=["GET"])
+@login_required
 def allTask():
     if 'user' in session:
         app.logger.debug(session['user'].tasks)
@@ -120,5 +123,6 @@ def allTask():
     return jsonify({"task_list": task_list})
 
 @app.route('/gettask')
+@login_required
 def gettask():
     return render_template('gettask.html')
