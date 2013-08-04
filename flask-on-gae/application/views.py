@@ -10,6 +10,8 @@ import facebook
 
 @app.route('/loggedin')
 def index():
+    if 'user' in session:
+        app.logger.debug(session['user'])
     return render_template('index.html')
 
     # Return the html for login
@@ -37,17 +39,28 @@ def loginPost():
 def newTask():
     desc = request.form['description']
     duration = int(request.form['duration'])
+    done = bool(request.form['done'])
+    isPrivate = bool(request.form['isPrivate'])
 
-    newTask = Task(description = desc, duration = duration)
-    key = newTask.save();
+    newTask = Task(description = desc, duration = duration, done = done, isPrivate = isPrivate)
+    key = newTask.save()
+
+    app.logger.debug("added %s   %s  %s" % (key, desc, type(key)))
+    user = session['user'] 
+    user.tasks.insert(0, key)
+    user.save()
+    session['user'] = user
 
     data = {"status": "ok"}
     return jsonify(data)
 
 @app.route('/tasks', methods=["GET"])
 def allTask():
-    q = Task.all()
-    task_list = [{"description": task.description, "duration": task.duration} for task in q.run(limit=15)]
+    if 'user' in session:
+        app.logger.debug(session['user'].tasks)
+    tasks = db.get(session['user'].tasks[:15])
+
+    task_list = [{"description": task.description, "duration": task.duration, "done": task.done, "isPrivate": task.isPrivate} for task in tasks]
     return jsonify({"task_list": task_list})
 
 @app.route('/gettask')
