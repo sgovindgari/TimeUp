@@ -41,7 +41,16 @@ function getTasks() {
                     //var tempelem = document.createElement('di
                     var description = data.task_list[i].description;
                     var duration = data.task_list[i].duration;
-                    $("#tasks").append("<li class='row'>" + "<div class='description'>" + description + "</div> <div class='duration'>" + duration + " minutes </div> </li>");
+                    var key = data.task_list[i].key;
+                    var done = data.task_list[i].done;
+                    var isPrivate = data.task_list[i].isPrivate;
+
+                    $("#tasks").append("<li class='row' value='" + key + "'>" +
+                            "<div class='done'>" + done + " </div>" + 
+                            "<div class='isPrivate'>" + isPrivate + " </div>" + 
+                            "<div class='description'>" + description + "</div>" + 
+                            "<div class='duration'>" + duration + " minutes </div>" + 
+                            "</li>");
                 }
             });
 }

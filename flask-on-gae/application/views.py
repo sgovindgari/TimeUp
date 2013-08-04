@@ -93,9 +93,15 @@ def newTask():
 def allTask():
     if 'user' in session:
         app.logger.debug(session['user'].tasks)
-    tasks = db.get(session['user'].tasks[:15])
+    keys = session['user'].tasks[:15]
+    tasks = db.get(keys)
 
-    task_list = [{"description": task.description, "duration": task.duration, "done": task.done, "isPrivate": task.isPrivate} for task in tasks if task]
+    task_list = []
+    for key in keys:
+        task = db.get(key)
+        if task:
+            task_list.append({"description": task.description, "duration": task.duration, "done": task.done, "isPrivate": task.isPrivate, "key": str(key)})
+
     return jsonify({"task_list": task_list})
 
 @app.route('/gettask')
