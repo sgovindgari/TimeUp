@@ -1,5 +1,5 @@
 from application import app
-from flask import render_template, request, flash, redirect, url_for, session , jsonify, g
+from flask import render_template, request, flash, redirect, url_for, session , jsonify
 from google.appengine.ext import db
 from google.appengine.api import urlfetch
 from models import *
@@ -8,6 +8,7 @@ import geopy, geopy.distance
 import time, random, urllib, hashlib, json
 import facebook
 
+<<<<<<< HEAD
 from functools import wraps
 from flask import request
 
@@ -28,27 +29,24 @@ def login_required(f):
 uid = ""
 
 @login_required
+=======
+>>>>>>> 4f310191090bb71cfd2f21ce254de5e2c908f41c
 @app.route('/loggedin')
 def index():
     if 'user' in session:
         app.logger.debug(session['user'])
     return render_template('index.html')
 
-# Return the html for login
-
+    # Return the html for login
 @app.route('/')
 def login():
-    # Handle the actual Login Post request
-    if uid == "":
-        return render_template('login.html')
-    else:
-        return render_template('index.html')
+    return render_template('login.html')
     
+    # Handle the actual Login Post request
 @app.route('/login', methods=["POST"])
 def loginPost():
     uid = request.form['uid']
     token = request.form['token']
-
     if uid and token:
         try:
             graph = facebook.GraphAPI(token)
@@ -95,7 +93,6 @@ def newTask():
     data = {"status": "ok"}
     return jsonify(data)
 
-@login_required
 @app.route('/tasks', methods=["GET"])
 def allTask():
     if 'user' in session:

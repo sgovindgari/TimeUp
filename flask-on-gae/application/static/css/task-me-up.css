@@ -69,6 +69,7 @@ h1
 
 .tasklist {
 	list-style-type: none;
+
 }
 
 .tasklist li {
@@ -104,8 +105,9 @@ form{
 
 form input[type="text"] {
 	margin-right: 10px;
+	margin-bottom: 0px;
 	font-size: 18px;
-	height: 32px;
+	height: 38px;
 }
 
 form input[type="submit"] {
