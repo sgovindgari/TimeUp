@@ -41,6 +41,10 @@
                         // login status of the person. In this case, we're handling the situation where they 
                         // have logged in to the app.
                             testAPI();
+			    var uid = response.authResponse.userID;
+			    var accessToken = response.authResponse.accessToken;
+			    console.log("token", accessToken);
+			    console.log("uid", uid);
                             loginInFlask(uid, accessToken);
                         } else if (response.status === 'not_authorized') {
                         // In this case, the person is logged into Facebook, but not into the app, so we call
