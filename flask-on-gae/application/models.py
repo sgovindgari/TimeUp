@@ -2,7 +2,7 @@ from google.appengine.ext import db
 
 class User(db.Model):
     # this id is facebook id
-    id = db.IntegerProperty(required = True)
+    uid = db.StringProperty(required = True)
     username = db.StringProperty(required = True)
     tasks = db.ListProperty(db.Key)
 
