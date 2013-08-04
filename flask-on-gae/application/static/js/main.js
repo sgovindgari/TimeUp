@@ -4,8 +4,12 @@ $( document ).ready(function() {
     $("#addTask").click(function() {
         var description = $("#description").val();
         var duration = $("#duration").val();
+        var isPrivate = $("#isPrivate").val();
 
-        $.post("/tasks/new", {"description": description, "duration": duration}, 
+        $.post("/tasks/new", 
+            {"description": description, 
+                "duration": duration,
+               "isPrivate": isPrivate}, 
             function(data) { 
                 getTasks();
             });
@@ -21,16 +25,20 @@ $( document ).ready(function() {
     });
 
     $("#gettask").click(function() {
-
         window.location = "/gettask";
-
     }); 
-       
-});
 
-function displayTask() {
-    console.log(data);
-}
+    $("#isPrivate").click(function() {
+        console.log($(this).attr("value"));
+        if ($(this).attr("value") == "true") {
+            $(this).attr("value", "false");
+            $(this).attr("class", "btn btn-primary");
+        } else {
+            $(this).attr("value", "true");
+            $(this).attr("class", "btn btn-info");
+        }
+    });
+});
 
 function getTasks() {
     // data :{[{description, duration},]}
