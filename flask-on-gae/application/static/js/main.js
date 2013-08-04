@@ -15,41 +15,45 @@ $( document ).ready(function() {
         });
       });
 
-    //$(".tasklist li").click(finishitem($(this).attr("value")));
-
     $("#giveTask").click(function() {
-      var duration = $("#duration2").val();
-      var me = $("#me").is(':checked');
-      var friend = $("#friend").is(':checked');
+        var duration = $("#duration2").val();
+        var me = $("#me").is(':checked');
+        var friend = $("#friend").is(':checked');
 
-      $.post("/givetask", {"duration": duration, "me": me, "friend": friend}, 
-        function(data){
-        $("#tasks").text("");
-        for (var i = 0; i < data.task_list.length; i++) {
-        //var tempelem = document.createElement('di
-          var description = data.task_list[i].description;
-          var duration = data.task_list[i].duration;
-          var key = data.task_list[i].key;
+        $.post("/givetask", {"duration": duration, "me": me, "friend": friend}, 
+          function(data){
+          $("#tasks").text("");
+          for (var i = 0; i < data.task_list.length; i++) {
+          //var tempelem = document.createElement('di
+            var description = data.task_list[i].description;
+            var duration = data.task_list[i].duration;
+            var key = data.task_list[i].key;
+            console.log(data.task_list[i].ownername)
+            var username = data.task_list[i].ownername;
 
-          $("#tasks").append("<li class='row' value='" + key + "'>" +
-              "<div class='description'>" + description + "</div>" + 
-              "<div class='duration'>" + duration + " minutes </div>" + 
-              "</li>");
-        }
-        });
 
-    });
+            $("#tasks").append("<li class='row' value='" + key + "'>" +
+                "<div class='description'>" + description + "</div>" + 
+                "<div class='duration'>" + duration + " minutes </div>" +
+                "<div class='username'>" + username + "</div>" + 
+                "</li>");
+          }
+          });
 
-      $("#getTask").click(function() {
-          window.location = "/gettask";
-          }); 
+          });
 
-      $("#logout").click(function() {
-          FB.logout(function(response) {
-            $.get("/logout", function(data) {
-              window.location = "/";
+        $("#getTask").click(function() {
+            window.location = "/gettask";
+            }); 
+
+        $("#logout").click(function() {
+            FB.logout(function(response) {
+              $.get("/logout", function(data) {
+                window.location = "/";
+                });
               });
             });
+
           });
 
       $("#isPrivate").click(function() {
