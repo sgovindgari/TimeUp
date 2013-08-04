@@ -74,7 +74,7 @@ def loginPost():
 def newTask():
     desc = request.form['description']
     duration = int(request.form['duration'])
-    isPrivate = request.form['isPrivate'] == 'false'
+    isPrivate = bool(request.form['isPrivate'])
 
     newTask = Task(description = desc, duration = duration, done=False, isPrivate = isPrivate)
     key = newTask.save()
@@ -124,6 +124,12 @@ def allTask():
             task_list.append({"description": task.description, "duration": task.duration, "done": task.done, "isPrivate": task.isPrivate, "key": str(key), "timestamp": str(task.timestamp)})
 
     return jsonify({"task_list": task_list})
+
+@app.route('/tasks', methods=["PUT"])
+@login_required
+def finishTask():
+   task = db.get(request.args.get('id'))
+   task.done = true;
 
 @app.route('/gettask')
 @login_required

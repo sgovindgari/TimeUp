@@ -15,6 +15,8 @@ $( document ).ready(function() {
             });
     });
 
+    $(".tasklist li").click(finishitem($(this).attr("value")));
+
     $("#givetask").click(function() {
         var duration = $("#duration2")
         var me = $("#me")
@@ -44,17 +46,25 @@ $( document ).ready(function() {
 
     $("#isPrivate").click(function() {
         console.log($(this).attr("value"));
-        if ($(this).attr("value") == "false") {
-            $(this).attr("value", "true");
-            $(this).attr("class", "btn btn-primary");
-            $(this).text("private");
-        } else {
+        if ($(this).attr("value") == 'true') {
             $(this).attr("value", "false");
             $(this).attr("class", "btn btn-inverse");
             $(this).text("public");
+        } else {
+            $(this).attr("value", "true");
+            $(this).attr("class", "btn btn-primary");
+            $(this).text("private");
         }
     });
 });
+
+function finishitem(id) {
+    $.put("/tasks", 
+    {"id":id}, 
+    function(data) { 
+        getTasks();
+    });
+}
 
 function getTasks() {
     // data :{[{description, duration},]}
@@ -70,13 +80,19 @@ function getTasks() {
                     var done = data.task_list[i].done;
                     var isPrivate = data.task_list[i].isPrivate;
                     var timestamp = data.task_list[i].timestamp;
+                    var private = "public";
+                    var done = "not done"
 
-                    $("#tasks").append("<li class='row' value='" + key + "'>" +
+                    if(isPrivate) {
+                        private = "private";
+                    }
+
+                    $("#tasks").append("<li class='row " + private + "' value='" + key + "'>" +
+                            "<div class='description'>" + description + "</div> <div class='attributes'>" + 
                             "<div class='done'>" + done + " </div>" + 
-                            "<div class='isPrivate'>" + isPrivate + " </div>" + 
-                            "<div class='description'>" + description + "</div>" + 
+                            /*"<div class='isPrivate'>" + isPrivate + " </div>" + */
                             "<div class='duration'>" + duration + " minutes </div>" + 
-                            "<div class='timestamp'>" + timestamp + "</div>" + 
+                            "<div class='timestamp'>" + timestamp + "</div> </div>" + 
                             "</li>");
                 }
             });
