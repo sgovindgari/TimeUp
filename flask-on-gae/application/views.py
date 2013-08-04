@@ -16,6 +16,8 @@ def login_required(f):
     def decorated_function(*args, **kwargs):
         if "user" in session and request.isAuthenticated():
             return redirect(url_for('login', next=request.url))
+        else:
+            app.logger.debug("user" in session)
         return f(*args, **kwargs)
     return decorated_function
 
@@ -73,7 +75,6 @@ def loginPost():
         data = "success"
     return data
 
-@login_required
 @app.route('/tasks/new', methods=["POST"])
 def newTask():
     desc = request.form['description']
@@ -85,10 +86,11 @@ def newTask():
     key = newTask.save()
 
     app.logger.debug("added %s   %s  %s" % (key, desc, type(key)))
-    user = session['user'] 
-    user.tasks.insert(0, key)
-    user.save()
-    session['user'] = user
+    if key:
+        user = session['user'] 
+        user.tasks.insert(0, key)
+        user.save()
+        session['user'] = user
 
     data = {"status": "ok"}
     return jsonify(data)
@@ -100,7 +102,7 @@ def allTask():
         app.logger.debug(session['user'].tasks)
     tasks = db.get(session['user'].tasks[:15])
 
-    task_list = [{"description": task.description, "duration": task.duration, "done": task.done, "isPrivate": task.isPrivate} for task in tasks]
+    task_list = [{"description": task.description, "duration": task.duration, "done": task.done, "isPrivate": task.isPrivate} for task in tasks if task]
     return jsonify({"task_list": task_list})
 
 @app.route('/gettask')
