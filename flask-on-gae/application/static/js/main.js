@@ -38,18 +38,26 @@ $( document ).ready(function() {
 
     });
 
-    $("#getTask").click(function() {
+    $("#gettask").click(function() {
         window.location = "/gettask";
     }); 
+
+    $("#logout").click(function() {
+        FB.logout(function(response) {
+            $.get("/logout", function(data) {
+                window.location = "/";
+            });
+        });
+    });
 
     $("#isPrivate").click(function() {
         console.log($(this).attr("value"));
         if ($(this).attr("value") == "true") {
             $(this).attr("value", "false");
-            $(this).attr("class", "btn btn-danger");
+            $(this).attr("class", "btn btn-primary");
         } else {
             $(this).attr("value", "true");
-            $(this).attr("class", "btn btn-primary");
+            $(this).attr("class", "btn btn-info");
         }
     });
 });
