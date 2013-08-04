@@ -40,6 +40,7 @@
                         // login status of the person. In this case, we're handling the situation where they 
                         // have logged in to the app.
                             testAPI();
+                            loginInFlask(uid, accessToken);
                         } else if (response.status === 'not_authorized') {
                         // In this case, the person is logged into Facebook, but not into the app, so we call
                         // FB.login() to prompt them to do so. 
@@ -60,7 +61,6 @@
                 });
             };
             console.log('async init defined');
-
             // Load the SDK asynchronously
             (function(d){
                 var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
@@ -78,6 +78,18 @@
                     console.log('Good to see you, ' + response.name + '.');
                 });
             }
+
+            function loginInFlask(uid, token) {
+                $.post("/login", {"uid": uid, "token": token},
+                function(data) {
+                    if (data.status == "success") {
+                        alert("backend login ok");
+                        } else {
+                        alert("backend login failed");
+                    }
+                });
+            }
+            
         </script>
         <script src="//connect.facebook.net/en_US/all.js"></script>
         <!--

@@ -6,15 +6,31 @@ from models import *
 from forms import *
 import geopy, geopy.distance
 import time, random, urllib, hashlib, json
+import facebook
 
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
+# Return the html for login
 @app.route('/login')
 def login():
     return render_template('login.html')
+
+# Handle the actual Login Post request
+@app.route('/login', methods=["POST"])
+def loginPost():
+    uid = request.form['uid']
+    token = request.form['token']
+
+    if uid and token:
+        graph = facebook.GraphAPI(token)
+        profile = graph.get_object("me") 
+        name = profile["name"]
+
+    return render_template('test.html', data = name)
+        
 
 @app.route('/signup', methods=["GET", "POST"])
 def signup():
